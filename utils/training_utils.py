@@ -36,3 +36,11 @@ class AverageMeter(object):
     def __str__(self):
         fmtstr = '{name} {val' + self.fmt + '} ({avg' + self.fmt + '})'
         return fmtstr.format(**self.__dict__)
+
+import torch
+
+def accuracy(predictions, targets):
+  if type(predictions).__module__ == 'numpy':
+    predictions = torch.tensor(predictions)
+    targets = torch.tensor(targets)
+  return torch.mean((predictions == targets).float()).item()*100.0
