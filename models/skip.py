@@ -52,24 +52,24 @@ def skip(
         else:
             model_tmp.add(deeper)
         
-        model_tmp.add(bn(num_channels_skip[i] + (num_channels_up[i + 1] if i < last_scale)))# else num_channels_down[i])))
+        #model_tmp.add(bn(num_channels_skip[i] + (num_channels_up[i + 1] if i < last_scale)))# else num_channels_down[i])))
 
         if num_channels_skip[i] != 0:
             skip.add(conv(input_depth, num_channels_skip[i], filter_skip_size, bias=need_bias, pad=pad))
-            i < last_scale:
-                    skip.add(bn(num_channels_skip[i]))
+            '''i < last_scale:
+                    skip.add(bn(num_channels_skip[i]))'''
             skip.add(act(act_fun))
             
         # skip.add(Concat(2, GenNoise(nums_noise[i]), skip_part))
 
         deeper.add(conv(input_depth, num_channels_down[i], filter_size_down[i], 2, bias=need_bias, pad=pad, downsample_mode=downsample_mode[i]))
-        i < last_scale:
-                deeper.add(bn(num_channels_down[i]))
+        '''i < last_scale:
+                deeper.add(bn(num_channels_down[i]))'''
         deeper.add(act(act_fun))
 
         deeper.add(conv(num_channels_down[i], num_channels_down[i], filter_size_down[i], bias=need_bias, pad=pad))
-        i < last_scale:
-                deeper.add(bn(num_channels_down[i]))
+        '''i < last_scale:
+                deeper.add(bn(num_channels_down[i]))'''
         deeper.add(act(act_fun))
 
         deeper_main = nn.Sequential()
@@ -84,15 +84,15 @@ def skip(
         deeper.add(nn.Upsample(scale_factor=2, mode=upsample_mode[i]))
 
         model_tmp.add(conv(num_channels_skip[i] + k, num_channels_up[i], filter_size_up[i], 1, bias=need_bias, pad=pad))
-        i < last_scale:
-                model_tmp.add(bn(num_channels_up[i]))
+        '''i < last_scale:
+                model_tmp.add(bn(num_channels_up[i]))'''
         model_tmp.add(act(act_fun))
 
 
         if need1x1_up:
             model_tmp.add(conv(num_channels_up[i], num_channels_up[i], 1, bias=need_bias, pad=pad))
-            i < last_scale:
-                    model_tmp.add(bn(num_channels_up[i]))
+            '''i < last_scale:
+                    model_tmp.add(bn(num_channels_up[i]))'''
             model_tmp.add(act(act_fun))
 
         input_depth = num_channels_down[i]
