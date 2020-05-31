@@ -93,7 +93,7 @@ def act(act_fun = 'LeakyReLU'):
 
 
 def bn(num_features):
-    return nn.BatchNorm2d(num_features)
+    return nn.BatchNorm1d(num_features)
 
 
 def conv(in_f, out_f, kernel_size, stride=1, bias=True, pad='zero', downsample_mode='stride'):
@@ -101,9 +101,9 @@ def conv(in_f, out_f, kernel_size, stride=1, bias=True, pad='zero', downsample_m
     if stride != 1 and downsample_mode != 'stride':
 
         if downsample_mode == 'avg':
-            downsampler = nn.AvgPool2d(stride, stride)
+            downsampler = nn.AvgPool1d(stride, stride)
         elif downsample_mode == 'max':
-            downsampler = nn.MaxPool2d(stride, stride)
+            downsampler = nn.MaxPool1d(stride, stride)
         elif downsample_mode  in ['lanczos2', 'lanczos3']:
             downsampler = Downsampler(n_planes=out_f, factor=stride, kernel_type=downsample_mode, phase=0.5, preserve_size=True)
         else:
@@ -114,10 +114,10 @@ def conv(in_f, out_f, kernel_size, stride=1, bias=True, pad='zero', downsample_m
     padder = None
     to_pad = int((kernel_size - 1) / 2)
     if pad == 'reflection':
-        padder = nn.ReflectionPad2d(to_pad)
+        padder = nn.ReflectionPad1d(to_pad)
         to_pad = 0
   
-    convolver = nn.Conv2d(in_f, out_f, kernel_size, stride, padding=to_pad, bias=bias)
+    convolver = nn.Conv1d(in_f, out_f, kernel_size, stride, padding=to_pad, bias=bias)
 
 
     layers = filter(lambda x: x is not None, [padder, convolver, downsampler])
