@@ -77,7 +77,7 @@ class UNet(nn.Module):
 
         # Downsample 
         downs = [inputs]
-        down = nn.AvgPool2d(2, 2)
+        down = nn.AvgPool1d(2)
         for i in range(4 + self.more_layers):
             downs.append(down(downs[-1]))
 
@@ -154,7 +154,7 @@ class unetDown(nn.Module):
     def __init__(self, in_size, out_size, norm_layer, need_bias, pad):
         super(unetDown, self).__init__()
         self.conv= unetConv2(in_size, out_size, norm_layer, need_bias, pad)
-        self.down= nn.MaxPool2d(2, 2)
+        self.down= nn.MaxPool1d(2)
 
     def forward(self, inputs):
         outputs= self.down(inputs)
@@ -168,7 +168,7 @@ class unetUp(nn.Module):
 
         num_filt = out_size if same_num_filt else out_size * 2
         if upsample_mode == 'deconv':
-            self.up= nn.ConvTranspose2d(num_filt, out_size, 4, stride=2, padding=1)
+            self.up= nn.ConvTranspose1d(num_filt, out_size, 4, stride=2, padding=1)
             self.conv= unetConv2(out_size * 2, out_size, None, need_bias, pad)
         elif upsample_mode=='bilinear' or upsample_mode=='nearest':
             self.up = nn.Sequential(nn.Upsample(scale_factor=2, mode=upsample_mode),
