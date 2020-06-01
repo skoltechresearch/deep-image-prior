@@ -40,7 +40,7 @@ class AverageMeter(object):
 import torch
 
 def accuracy(predictions, targets):
-  '''if type(predictions).__module__ == 'numpy':
+  if type(predictions).__module__ == 'numpy':
     predictions = torch.tensor(predictions)
-    targets = torch.tensor(targets)'''
+    targets = torch.tensor(targets)
   return torch.mean((predictions == targets).float()).item()*100.0
