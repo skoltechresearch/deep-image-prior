@@ -97,5 +97,5 @@ def skip(n_features,
     if need_sigmoid:
         model.add(nn.Sigmoid())
 
-    model.add(nn.Linear(n_features, n_features))
+    model.add(nn.Linear(n_features+4, n_features))
     return model
