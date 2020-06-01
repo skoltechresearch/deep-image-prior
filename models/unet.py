@@ -36,7 +36,7 @@ class UNet(nn.Module):
     '''
     def __init__(self, num_input_channels=3, num_output_channels=3, 
                        feature_scale=4, more_layers=0, concat_x=False,
-                       upsample_mode='deconv', pad='zero', norm_layer=nn.InstanceNorm2d, need_sigmoid=True, need_bias=True):
+                       upsample_mode='deconv', pad='zero', norm_layer=nn.InstanceNorm1d, need_sigmoid=True, need_bias=True):
         super(UNet, self).__init__()
 
         self.feature_scale = feature_scale
