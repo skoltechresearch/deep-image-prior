@@ -180,7 +180,7 @@ class unetUp(nn.Module):
     def forward(self, inputs1, inputs2):
         in1_up= self.up(inputs1)
         
-        if (inputs2.size(2) != in1_up.size(2))):
+        if (inputs2.size(2) != in1_up.size(2)):
             diff2 = (inputs2.size(2) - in1_up.size(2)) // 2 
             inputs2_ = inputs2[:, :, diff2 : diff2 + in1_up.size(2)]
         else:
